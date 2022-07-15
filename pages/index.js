@@ -1,8 +1,52 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { useDispatch, useSelector } from "react-redux";
+import { selectCounter } from "../store/feature/counter.js"
+
+// import actions yang dibutuhkan di sini
+import {
+  increment,
+  decrement,
+  reset,
+  incrementSpec,
+  decrementSpec,
+} from "../store/feature/counter.js"
+
 
 export default function Home() {
+  const counter = useSelector(selectCounter);
+  const dispatcher = useDispatch();
+
+  const buttonDecrementOnClickHandler = () => {
+    // Perhatikan di sini dispatcher tidak mempassing action seperti biasa lagi
+    // dispatcher({
+    //   type: "decrement",
+    // });
+
+    // Action di sini dipanggil seperti kita memanggil fungsi biasanya
+    dispatcher(decrement());
+  };
+
+  const buttonResetOnClickHandler = () => {
+    // dispatcher({
+    //   type: "reset",
+    // });
+
+    // Perhatikan di sini dispatcher tidak mempassing action seperti biasa lagi
+    dispatcher(reset());
+  };
+
+  const buttonIncrementOnClickHandler = () => {
+    // dispatcher({
+    //   type: "increment",
+    // });
+
+    // Perhatikan di sini dispatcher tidak mempassing action seperti biasa lagi
+    dispatcher(increment());
+  };
+
+
   return (
     <div className={styles.container}>
       <Head>
@@ -16,9 +60,9 @@ export default function Home() {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
-        <p className={styles.description}>
+        <p onClick={() => buttonIncrementOnClickHandler()} className={styles.description}>
           Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          <code className={styles.code}>{counter}</code>
         </p>
 
         <div className={styles.grid}>
